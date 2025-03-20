@@ -21,9 +21,34 @@ TRANSACTION_TYPES =(
 )
 
 
+class OwnerType(models.Model):
+    name = models.CharField(max_length=100, unique=True, choices=OWNER_TYPES)
+    
+    def __srt__(self):
+        return self.name
 
+class Owner(models.Model):
+    name = models.CharField(max_length =255)
+    owener_type = models.ForeignKey(OwnerType, on_delete=models.CASCADE)
+    
+    
+    def __str__(self):
+        return self.name
+    
+class PropertyType(models.Model):
+    name = models.CharField(choices=PROPERTY_TYPES, max_length=100, unique=True )
+    
+    def __str__(self):
+        return self.name
+
+class TransactionType(models.Model):
+    name = models.CharField(choices=TRANSACTION_TYPES, max_length=100, unique=True, )
+    
+    def __str__(self):
+        return self.name
+    
 class Location(models.Model):
-    department = models.Charfield(max_Length=100)
+    department = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
     
@@ -33,33 +58,6 @@ class Location(models.Model):
         
     def __str__(self):
         return f'{self.department},{self.city},{self.district}'
-
-
-class OwnerType(models.Model):
-    name = models.CharField(max_length= 100, unique=True, choices=OWNER_TYPES)
-    
-    def __srt__(self):
-        return self.name
-
-class Owner(models.Model):
-    name = models.CharsField(max_lenght=255)
-    owener_type = models.ForeignKey(OwnerType, on_delete=models.CASCADE)
-    
-    
-    def __str__(self):
-        return self.name
-    
-class PropertyType(models.Model):
-    name = models.CharField(max_length=100, unique=True, choices=PROPERTY_TYPES)
-    
-    def __str__(self):
-        return self.name
-
-class TransactionType(models.Model):
-    name = models.CharFiled(max_length=100, unique=True, choices=TRANSACTION_TYPES)
-    
-    def __str__(self):
-        return self.name
     
 class Property(models.Model):
     property_type = models.ForeignKey(PropertyType, on_delete=models.CASCADE)
