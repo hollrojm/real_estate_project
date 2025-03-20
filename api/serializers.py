@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Location, OwnerType, Owner, PropertyType, TransactionType, Property
+from core.models import Location, OwnerType, Owner, PropertyType, TransactionType, Property
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:

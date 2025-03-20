@@ -22,9 +22,9 @@ TRANSACTION_TYPES =(
 
 
 class OwnerType(models.Model):
-    name = models.CharField(max_length=100, unique=True, choices=OWNER_TYPES)
+    name = models.CharField(choices=OWNER_TYPES, max_length=100, unique=True )
     
-    def __srt__(self):
+    def __str__(self):
         return self.name
 
 class Owner(models.Model):
