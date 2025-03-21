@@ -304,6 +304,8 @@ document.getElementById('saveProperty').addEventListener('click', async () => {
             address: document.getElementById('address').value,
             area: parseFloat(document.getElementById('area').value),
             total_price: parseFloat(document.getElementById('total_price').value),
+            latitude: parseFloat(document.getElementById('latitude').value),
+            longitude: parseFloat(document.getElementById('longitude').value),
             price_by_m2: parseFloat((document.getElementById('total_price').value /
                 document.getElementById('area').value).toFixed(2)),
             stratum: document.getElementById('stratum').value ? parseInt(document.getElementById('stratum').value) : null,
@@ -398,6 +400,8 @@ function editProperty(id) {
 
             document.getElementById('address').value = property.address;
             document.getElementById('area').value = property.area;
+            document.getElementById('latitude').value = property.latitude;
+            document.getElementById('longitude').value = property.longitude;
             document.getElementById('total_price').value = property.total_price;
             if (property.stratum === null) {
                 document.getElementById('stratum').value = '';
