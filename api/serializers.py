@@ -46,12 +46,15 @@ class PropertySerializer(serializers.ModelSerializer):
 class PropertyListSerializer(serializers.ModelSerializer):
     property_type_name = serializers.CharField(source='property_type.name', read_only=True)
     transaction_type_name = serializers.CharField(source='transaction_type.name', read_only=True)
-    location_str = serializers.CharField(source='location.__str__', read_only=True)
     owner_name = serializers.CharField(source='onwer.name', read_only=True)
+    department = serializers.CharField(source='location.department', read_only=True)
+    city = serializers.CharField(source='location.city', read_only=True)
+    district = serializers.CharField(source='location.district', read_only=True)
+   
 
     class Meta:
         model = Property
         fields = [
-            'id', 'property_type_name', 'transaction_type_name', 'location_str', 
-            'owner_name', 'address', 'area', 'total_price', 'publication_date'
+            'id', 'property_type_name', 'transaction_type_name', 'department', 'city', 'district',
+            'owner_name', 'address', 'area', 'total_price', 'publication_date', 'floor', 'rooms', 'stratum', 'age', 'price_by_m2',  'latitude', 'longitude', 'publication_year', 'publication_month'
         ]

@@ -26,9 +26,22 @@ function loadProperties() {
                     <td>${property.property_type_name || ''}</td>
                     <td>${property.owner_name || ''}</td>
                     <td>${property.address}</td>
+                    <td>${property.department || ''}</td>
                     <td>${property.city || ''}</td>
+                    <td>${property.district || ''}</td>
+                    <td>${property.stratum || ''}</td>
                     <td>$${formatNumber(property.total_price)}</td>
                     <td>${property.area}</td>
+                    <td>${property.floor || ''}</td>
+                    <td>${property.age || ''}</td>
+                    <td>${property.rooms || ''}</td>
+                    <td>${property.latitude || ''}</td>
+                    <td>${property.longitude || ''}</td>
+                    <td>${property.publication_date || ''}</td>
+                    <td>${property.publication_year || ''}</td>
+                    <td>${property.publication_month || ''}</td>
+
+
                     <td>
                         <button class="btn btn-sm btn-primary edit-btn" data-id="${property.id}">Editar</button>
                         <button class="btn btn-sm btn-danger delete-btn" data-id="${property.id}">Eliminar</button>
