@@ -31,7 +31,13 @@ Una API completa para la gestión de propiedades inmobiliarias desarrollada con 
 
 El siguiente diagrama muestra la estructura de la base de datos del proyecto:
 
-![Diagrama de Base de Datos](./docs/diagrama_bd.png)
+![image](https://github.com/user-attachments/assets/dd799a89-98db-4e3e-9193-fb9a2dd98098)
+
+El siguiente diagrama muestra el flujo de Trabajo de la Aplicación:
+
+![image](https://github.com/user-attachments/assets/dab2961a-a476-4ed0-a498-1e16bdf281e4)
+
+
 
 ## Tecnologías Utilizadas
 
@@ -236,20 +242,7 @@ El proyecto incluye los siguientes modelos principales:
 - `PUT /api/transaction_types/{id}/`: Actualizar tipo de transacción
 - `DELETE /api/transaction_types/{id}/`: Eliminar tipo de transacción
 
-## Despliegue
 
-### Despliegue con Docker
-
-```bash
-# Construir y ejecutar contenedores
-docker-compose up -d --build
-
-# Ver logs
-docker-compose logs -f
-
-# Detener contenedores
-docker-compose down
-```
 
 ### Despliegue en Producción
 
