@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
-from core.models import Location, OwnerType, Owner, PropertyType, TransactionType, Property
+from core.models import Location, OwnerType, Owner, PropertyType, TransactionType, Property , AGE_TYPES
 from .serializers import LocationSerializer, OwnerTypeSerializer, OwnerSerializer, PropertyTypeSerializer, TransactionTypeSerializer, PropertySerializer, PropertyListSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -43,6 +43,8 @@ class PropertyTypeViewSet(viewsets.ModelViewSet):
     queryset = PropertyType.objects.all()
     serializer_class = PropertyTypeSerializer
     permission_classes = [IsAuthenticated]
+    
+    
 
 
 class TransactionTypeViewSet(viewsets.ModelViewSet):
@@ -63,6 +65,10 @@ class PropertyViewSet(viewsets.ModelViewSet):
     serializer_class = PropertySerializer
     permission_classes = [IsAuthenticated]
     
+    
+    
+    
+    
     def get_serializer_class(self):
         """
         Usa un serializer diferente para las acciones de listado
@@ -71,6 +77,15 @@ class PropertyViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return PropertyListSerializer
         return PropertySerializer
+    
+    @action(detail=False, methods=['get'])
+    def ages(self, request):
+        """
+        Returns all available property age types.
+        """
+        age_types = [age[0] for age in AGE_TYPES]
+        return Response(age_types)
+    
     
     
 class LocationViewSet(viewsets.ModelViewSet):
@@ -145,3 +160,5 @@ class LocationViewSet(viewsets.ModelViewSet):
                 result[location.city].append(location.district)
     
         return Response(result)
+    
+    

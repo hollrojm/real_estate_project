@@ -4,6 +4,7 @@ const API_OWNERS = '/api/owners/';
 const API_PROPERTY_TYPES = '/api/property_types/';
 const API_TRANSACTION_TYPES = '/api/transaction_types/';
 const API_LOCATIONS = '/api/locations/';
+const API_PROPERTY_AGES = '/api/properties/ages/';
 
 
 // DOM Elements
@@ -84,6 +85,23 @@ function loadOwners() {
             console.error('Error loading owners:', error);
         });
 }
+function loadAges() {
+    fetch(API_PROPERTY_AGES)
+        .then(response => response.json())
+        .then(data => {
+            const ageSelect = document.getElementById('age');
+            ageSelect.innerHTML = '<option value="">Seleccionar...</option>';
+            data.forEach(age => {
+                const option = document.createElement('option');
+                option.value = age;
+                option.textContent = age;
+                ageSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading ages:', error);
+        });
+}
 function loadPropertyType() {
     fetch(API_PROPERTY_TYPES)
         .then(response => response.json())
@@ -99,7 +117,7 @@ function loadPropertyType() {
             });
         })
         .catch(error => {
-            console.error('Error loading owners:', error);
+            console.error('Error loading Property Type:', error);
         });
 }
 
@@ -119,7 +137,7 @@ function loadTransactionType() {
             });
         })
         .catch(error => {
-            console.error('Error loading owners:', error);
+            console.error('Error loading Transaction type:', error);
         });
 }
 function loadDepartments() {
@@ -291,7 +309,7 @@ document.getElementById('saveProperty').addEventListener('click', async () => {
             stratum: parseInt(document.getElementById('stratum').value || '0'),
             rooms: parseInt(document.getElementById('rooms').value || '0'),
             floor: parseInt(document.getElementById('floor').value || '0'),
-            age: parseInt(document.getElementById('age').value || '0'),
+            age: document.getElementById('age').value || null,
             onwer: parseInt(document.getElementById('owner').value),
             publication_date: new Date().toISOString().split('T')[0],
             publication_year: new Date().getFullYear(),
@@ -471,5 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadOwners();
     loadPropertyType()
     loadTransactionType();
-    loadDepartments()
+    loadDepartments();
+    loadAges();
 });

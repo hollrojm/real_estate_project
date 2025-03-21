@@ -10,6 +10,9 @@ router.register(r'owner_types', OwnerTypeViewSet)
 router.register(r'property_types', PropertyTypeViewSet)
 router.register(r'transaction_types', TransactionTypeViewSet)
 
+
+
 urlpatterns = [
     path('', include(router.urls)),
+    
 ]

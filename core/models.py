@@ -20,6 +20,13 @@ TRANSACTION_TYPES =(
         ('Arriendo', 'Arriendo')
 )
 
+AGE_TYPES=(
+    ('1 a 8 años','1 a 8 años'),
+    ('9 a 15 años','9 a 15 años'),
+    ('16 a 30 años','16 a 30 años'),
+    ('Más de 30 años','Más de 30 años'),
+)
+
 
 class OwnerType(models.Model):
     name = models.CharField(choices=OWNER_TYPES, max_length=100, unique=True )
@@ -68,7 +75,7 @@ class Property(models.Model):
     stratum = models.IntegerField(null=True, blank=True)
     floor = models.IntegerField(null=True, blank=True)
     rooms = models.IntegerField(null=True, blank=True)
-    age = models.IntegerField(null=True, blank=True)
+    age = models.CharField(choices=AGE_TYPES, max_length=50, unique=True, null=True, blank=True)
     area = models.DecimalField(max_digits=10, decimal_places=2)
     latitude = models.DecimalField(max_digits=10, decimal_places=8, null=True, blank=True)
     longitude = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
