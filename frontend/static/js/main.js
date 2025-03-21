@@ -306,7 +306,7 @@ document.getElementById('saveProperty').addEventListener('click', async () => {
             total_price: parseFloat(document.getElementById('total_price').value),
             price_by_m2: parseFloat((document.getElementById('total_price').value /
                 document.getElementById('area').value).toFixed(2)),
-            stratum: parseInt(document.getElementById('stratum').value || '0'),
+            stratum: document.getElementById('stratum').value ? parseInt(document.getElementById('stratum').value) : null,
             rooms: parseInt(document.getElementById('rooms').value || '0'),
             floor: parseInt(document.getElementById('floor').value || '0'),
             age: document.getElementById('age').value || null,
@@ -399,7 +399,11 @@ function editProperty(id) {
             document.getElementById('address').value = property.address;
             document.getElementById('area').value = property.area;
             document.getElementById('total_price').value = property.total_price;
-            document.getElementById('stratum').value = property.stratum || '';
+            if (property.stratum === null) {
+                document.getElementById('stratum').value = '';
+            } else {
+                document.getElementById('stratum').value = property.stratum.toString();
+            }
             document.getElementById('rooms').value = property.rooms || '';
             document.getElementById('floor').value = property.floor || '';
             document.getElementById('age').value = property.age || '';
