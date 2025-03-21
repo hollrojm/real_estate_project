@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Inmuebles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="#">Sistema de Inmuebles</a>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12">
+          <h1>Listado de Propiedades</h1>
+          <button class="btn btn-success mb-3" id="btnNewProperty">Nueva Propiedad</button>
+          <div class="table-responsive">
+            <table class="table table-striped" id="propertyTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo</th>
+                  <th>Propietario</th>
+                  <th>Dirección</th>
+                  <th>Ciudad</th>
+                  <th>Precio</th>
+                  <th>Área (m²)</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Data will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="propertyModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Datos de la Propiedad</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="propertyForm">
+              <input type="hidden" id="propertyId" />
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="property_type" class="form-label">Tipo de Propiedad</label>
+                  <select class="form-select" id="property_type" required></select>
+                </div>
+                <div class="col-md-6">
+                  <label for="transaction_type" class="form-label">Tipo de Transacción</label>
+                  <select class="form-select" id="transaction_type" required></select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="department" class="form-label">Departamento</label>
+                  <select type="form-select" class="form-control" id="department" required></select>
+                  <option value="">Seleccionar...</option>
+                </div>
+                <div class="col-md-6">
+                  <label for="city" class="form-label">Ciudad</label>
+                  <select class="form-select" id="city" required></select>
+                  <option value="">Seleccionar departamento primero...</option>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="district" class="form-label">Barrio</label>
+                  <select class="form-select" id="district" required>
+                    <option value="">Seleccionar ciudad primero...</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="address" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="address" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="area" class="form-label">Área (m²)</label>
+                  <input type="number" class="form-control" id="area" required />
+                </div>
+                <div class="col-md-4">
+                  <label for="total_price" class="form-label">Precio Total</label>
+                  <input type="number" class="form-control" id="total_price" required />
+                </div>
+                <div class="col-md-4">
+                  <label for="stratum" class="form-label">Estrato</label>
+                  <input type="number" class="form-control" id="stratum" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="rooms" class="form-label">Habitaciones</label>
+                  <input type="number" class="form-control" id="rooms" />
+                </div>
+                <div class="col-md-4">
+                  <label for="floor" class="form-label">Piso</label>
+                  <input type="number" class="form-control" id="floor" />
+                </div>
+                <div class="col-md-4">
+                  <label for="age" class="form-label">Antiguedad</label>
+                  <input type="text" class="form-control" id="age" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="owner" class="form-label">Propietario</label>
+                  <select class="form-select" id="owner" required>
+                    <!-- Owners will be loaded here -->
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="saveProperty">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+  </body>
+</html>

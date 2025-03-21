@@ -4,12 +4,12 @@ from core.models import Location, OwnerType, Owner, PropertyType, TransactionTyp
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ['id', 'department', 'city', 'district']
+        fields = '__all__'
 
 class OwnerTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = OwnerType
-        fields = ['id', 'name']
+        fields = '__all__'
 
 class OwnerSerializer(serializers.ModelSerializer):
     owener_type = OwnerTypeSerializer(read_only=True)
@@ -21,54 +21,25 @@ class OwnerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Owner
-        fields = ['id', 'name', 'owener_type', 'owener_type_id']
+        fields = '__all__'
 
 class PropertyTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyType
-        fields = ['id', 'name']
+        fields = '__all__'
 
 class TransactionTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionType
-        fields = ['id', 'name']
+        fields = '__all__'
 
 class PropertySerializer(serializers.ModelSerializer):
-    property_type = PropertyTypeSerializer(read_only=True)
-    transaction_type = TransactionTypeSerializer(read_only=True)
-    location = LocationSerializer(read_only=True)
-    onwer = OwnerSerializer(read_only=True)
+    owner_name = serializers.ReadOnlyField(source='owner.name')
     
-    property_type_id = serializers.PrimaryKeyRelatedField(
-        queryset=PropertyType.objects.all(),
-        source='property_type',
-        write_only=True
-    )
-    transaction_type_id = serializers.PrimaryKeyRelatedField(
-        queryset=TransactionType.objects.all(),
-        source='transaction_type',
-        write_only=True
-    )
-    location_id = serializers.PrimaryKeyRelatedField(
-        queryset=Location.objects.all(),
-        source='location',
-        write_only=True
-    )
-    onwer_id = serializers.PrimaryKeyRelatedField(
-        queryset=Owner.objects.all(),
-        source='onwer',
-        write_only=True
-    )
 
     class Meta:
         model = Property
-        fields = [
-            'id', 'property_type', 'property_type_id', 'transaction_type', 'transaction_type_id',
-            'location', 'location_id', 'onwer', 'onwer_id', 'address', 'stratum', 'floor',
-            'rooms', 'age', 'area', 'latitude', 'longitude', 'publication_date',
-            'publication_year', 'publication_month', 'price_by_m2', 'total_price',
-            'created_at', 'updated_at'
-        ]
+        fields = '__all__'
         read_only_fields = ['created_at', 'updated_at']
 
 # Serializer para uso en listados (más ligero)

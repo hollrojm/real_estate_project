@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
-from .models import Location, OwnerType, Owner, PropertyType, TransactionType, Property
+from core.models import Location, OwnerType, Owner, PropertyType, TransactionType, Property
 from .serializers import LocationSerializer, OwnerTypeSerializer, OwnerSerializer, PropertyTypeSerializer, TransactionTypeSerializer, PropertySerializer, PropertyListSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -72,4 +72,76 @@ class PropertyViewSet(viewsets.ModelViewSet):
             return PropertyListSerializer
         return PropertySerializer
     
+    
+class LocationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint para gestionar ubicaciones.
+    """
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    permission_classes = [IsAuthenticated]
+    
+    @action(detail=False, methods=['post'])
+    def find_or_create(self, request):
+        """
+        Busca una ubicación existente por departamento, ciudad y distrito
+        o crea una nueva si no existe.
+        """
+        department = request.data.get('department')
+        city = request.data.get('city')
+        district = request.data.get('district')
+        
+        if not all([department, city, district]):
+            return Response(
+                {"detail": "Departamento, ciudad y distrito son requeridos"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+       
+        try:
+            location = Location.objects.get(
+                department=department,
+                city=city,
+                district=district
+            )
+            serializer = self.get_serializer(location)
+            return Response(serializer.data)
+        except Location.DoesNotExist:
+            # Crear nueva ubicación si no existe
+            new_location_data = {
+                'department': department,
+                'city': city,
+                'district': district
+            }
+            serializer = self.get_serializer(data=new_location_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
    
+    @action(detail=False, methods=['get'])
+    def by_department(self, request):
+        """
+        Retorna todas las locaciones filtradas por departamento.
+        """
+        department = request.query_params.get('department', None)
+        if not department:
+            return Response(
+            {"detail": "Parámetro 'department' es requerido"}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Filtrar locaciones por departamento
+        locations = Location.objects.filter(department=department)
+    
+    # Agrupar por ciudad y distrito
+        result = {}
+        for location in locations:
+            if location.city not in result:
+                result[location.city] = []
+        
+            if location.district not in result[location.city]:
+                result[location.city].append(location.district)
+    
+        return Response(result)
